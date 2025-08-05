@@ -7,7 +7,7 @@ def canUnlockAll(boxes):
     """Determine if all boxes can be unlocked"""
     if not boxes:
         return True
-    
+
     unlocked = [False] * len(boxes)
     unlocked[0] = True
     stack = [0]
