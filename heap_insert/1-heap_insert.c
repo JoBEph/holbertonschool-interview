@@ -3,40 +3,23 @@
 #include "binary_trees.h"
 
 /**
- * heap_insert - inserts a value into a Max Binary Heap
- * @root: double pointer to the root node of the Heap
- * @value: value to store in the node to be inserted
- * Return: pointer to the inserted node, or NULL on failure
+ * find_insertion_point - finds where to insert the new node in heap
+ * @root: pointer to the root of the heap
+ * @new_node: the new node to insert
+ * Return: void
  */
-heap_t *heap_insert(heap_t **root, int value)
+void find_insertion_point(heap_t *root, heap_t *new_node)
 {
-	heap_t *new_node, *current;
+	heap_t *current;
 	heap_t *queue[1024];
 	int front = 0, rear = 0;
-	int temp;
-	
-	if (!root)
-		return (NULL);
-	
-	/* Create new node */
-	new_node = binary_tree_node(NULL, value);
-	if (!new_node)
-		return (NULL);
-	
-	/* Handle empty heap */
-	if (!*root)
-	{
-		*root = new_node;
-		return (new_node);
-	}
-	
-	/* Find insertion point using level-order traversal */
-	queue[rear++] = *root;
-	
+
+	queue[rear++] = root;
+
 	while (front < rear)
 	{
 		current = queue[front++];
-		
+
 		if (!current->left)
 		{
 			current->left = new_node;
@@ -55,17 +38,52 @@ heap_t *heap_insert(heap_t **root, int value)
 			queue[rear++] = current->right;
 		}
 	}
-	
-	/* Heapify up to maintain max heap property */
-	current = new_node;
+}
+
+/**
+ * heapify - maintains max heap property
+ * @node: pointer to the node
+ * Return: current
+ */
+heap_t *heapify(heap_t *node)
+{
+	heap_t *current = node;
+	int temp;
+
 	while (current->parent && current->n > current->parent->n)
 	{
-		/* Swap values with parent */
 		temp = current->n;
 		current->n = current->parent->n;
 		current->parent->n = temp;
 		current = current->parent;
 	}
-	
-	return (new_node);
+
+	return (current);
+}
+
+/**
+ * heap_insert - inserts a value into a Max Binary Heap
+ * @root: double pointer to the root node
+ * @value: value to store in the node
+ * Return: new node
+ */
+heap_t *heap_insert(heap_t **root, int value)
+{
+	heap_t *new_node;
+
+	if (!root)
+		return (NULL);
+
+	new_node = binary_tree_node(NULL, value);
+	if (!new_node)
+		return (NULL);
+
+	if (!*root)
+	{
+		*root = new_node;
+		return (new_node);
+	}
+
+	find_insertion_point(*root, new_node);
+	return (heapify(new_node));
 }
