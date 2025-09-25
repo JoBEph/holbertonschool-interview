@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 /**
- * print_grid - Print 3x3 grid
+ *print_grid - Print 3x3 grid
  *@grid: 3x3 grid
  */
 static void print_grid(int grid[3][3])
