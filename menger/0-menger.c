@@ -6,21 +6,21 @@
  * @x: column index
  * @y: row index
  *
- * Return: 1 if the cell is a hole (should be space), 0 if filled (should be '#')
+ * Return: 1 if the cell is a hole (space), 0 if filled ('#').
  *
- * The function checks base-3 digits of x and y. If at any level both digits
- * are 1 (the center of a 3x3 block), the cell is a hole.
+ * The function checks base-3 digits of x and y. If at any level both
+ * digits are 1 (the center of a 3x3 block), the cell is a hole.
  */
 static int is_hole(int x, int y)
 {
-    while (x > 0 || y > 0)
-    {
-        if ((x % 3) == 1 && (y % 3) == 1)
-            return (1);
-        x /= 3;
-        y /= 3;
-    }
-    return (0);
+	while (x > 0 || y > 0)
+	{
+		if ((x % 3) == 1 && (y % 3) == 1)
+			return (1);
+		x /= 3;
+		y /= 3;
+	}
+	return (0);
 }
 
 /**
@@ -31,26 +31,26 @@ static int is_hole(int x, int y)
  */
 void menger(int level)
 {
-    int size;
-    int row, col;
+	int size;
+	int row, col;
 
-    if (level < 0)
-        return;
+	if (level < 0)
+		return;
 
-    /* compute size = 3^level */
-    size = 1;
-    while (level-- > 0)
-        size *= 3;
+	/* compute size = 3^level */
+	size = 1;
+	while (level-- > 0)
+		size *= 3;
 
-    for (row = 0; row < size; row++)
-    {
-        for (col = 0; col < size; col++)
-        {
-            if (is_hole(col, row))
-                putchar(' ');
-            else
-                putchar('#');
-        }
-        putchar('\n');
-    }
+	for (row = 0; row < size; row++)
+	{
+		for (col = 0; col < size; col++)
+		{
+			if (is_hole(col, row))
+				putchar(' ');
+			else
+				putchar('#');
+		}
+		putchar('\n');
+	}
 }
