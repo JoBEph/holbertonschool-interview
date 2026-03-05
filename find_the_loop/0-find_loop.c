@@ -19,7 +19,6 @@ listint_t *find_listint_loop(listint_t *head)
 	slow = head;
 	fast = head;
 
-	/* Phase 1: Detect if loop exists */
 	while (fast != NULL && fast->next != NULL)
 	{
 		slow = slow->next;
@@ -27,10 +26,8 @@ listint_t *find_listint_loop(listint_t *head)
 
 		if (slow == fast)
 		{
-			/* Loop detected, now find the start */
 			slow = head;
 
-			/* Phase 2: Find the start of the loop */
 			while (slow != fast)
 			{
 				slow = slow->next;
